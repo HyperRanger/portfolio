@@ -3,9 +3,14 @@
 
 class PortfolioAPI {
   constructor() {
-    this.apiURL = "https://portfolio-xj76.onrender.com/api";;
+    // Always use Render backend for API calls in production
+    this.apiURL = (window.location.hostname.includes("vercel.app") || window.location.hostname.includes("portfolio"))
+      ? "https://portfolio-xj76.onrender.com/api"
+      : "http://localhost:3001/api";
+
     this.init();
   }
+
 
   init() {
     this.loadProjects();
@@ -16,7 +21,7 @@ class PortfolioAPI {
   async loadProjects() {
     try {
       const response = await fetch(`${this.apiURL}/projects`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
