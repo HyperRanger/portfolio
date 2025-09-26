@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "owolabi-portfolio",
+  "name": "koji-portfolio",
   "builds": [
     {
       "src": "backend/server.js",
@@ -21,11 +21,6 @@
       "dest": "/$1"
     }
   ],
-  "functions": {
-    "backend/server.js": {
-      "maxDuration": 10
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }
