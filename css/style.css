@@ -678,6 +678,7 @@ h2 {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text);
+  -webkit-backdrop-filter: blur();
   backdrop-filter: blur(12px);
   transform-style: preserve-3d;
   position: absolute;
