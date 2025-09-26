@@ -1,0 +1,24 @@
+{
+  "name": "owolabi-portfolio",
+  "version": "1.0.0",
+  "description": "Professional portfolio with 3D effects and physics-based skills constellation",
+  "main": "index.html",
+  "scripts": {
+    "dev": "cd backend && npm run dev",
+    "start": "cd backend && npm start",
+    "build": "echo 'Static site - no build needed'",
+    "vercel-build": "cd backend && npm install"
+  },
+  "keywords": [
+    "portfolio",
+    "3d-effects",
+    "physics",
+    "space-theme",
+    "interactive"
+  ],
+  "author": "Owolabi Olamilekan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,26 +1,9 @@
-/* MAIN.JS: The Quantum Conductor
-   - Orchestrates form symphonies
-   - Evolves particle nebulae with 3D depth illusions
-   - Unveils revelations on scroll's whisper
-   - Infuses tilt-responsive magic for 3D immersion
-
-   Behold: Code that breathes life into the void, where particles orbit like lost souls in a digital galaxy.
-*/
-
 (() => {
   console.log("Cosmic Portfolio Awakened: Dimensions unfold...");
 
   /* ================== FORM HARMONIZER ================== */
   const harmonizeForms = () => {
-    const form = document.getElementById("contact-form");
-    if (form) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        // In a parallel universe, this whispers to the ether (e.g., EmailJS or Netlify)
-        alert("Message propelled into the cosmos! (Backend awaits stellar alignment)");
-        form.reset();
-      });
-    }
+    console.log("Form handling delegated to API integration system");
   };
 
   /* ================== NEBULA EVOLUTION: Enhanced Particles with Depth ================== */
@@ -256,6 +239,12 @@
       mouse.x = x; mouse.y = y;
       mouse.tiltX = (x - centerX) / centerX * 10; // Parallax tilt
       mouse.tiltY = (y - centerY) / centerY * 10;
+
+      // Update CSS variables for mouse position (for cosmic overlay effects)
+      const mouseXPercent = (x / w) * 100;
+      const mouseYPercent = (y / h) * 100;
+      document.documentElement.style.setProperty('--mouse-x', mouseXPercent + '%');
+      document.documentElement.style.setProperty('--mouse-y', mouseYPercent + '%');
     });
 
     // Touch in the void
@@ -282,6 +271,25 @@
 
   /* ================== REVELATION OBSERVER: Unveil on Ascent ================== */
   const awakenRevelations = () => {
+    /* === Auto-inject reveal + gradient classes across the site === */
+    document.querySelectorAll('section').forEach((section) => {
+      let localDelay = 0;
+      Array.from(section.children).forEach((child) => {
+        if (!child.classList.contains('reveal')) {
+          child.classList.add('reveal');
+          child.dataset.delay = localDelay;
+          localDelay += 150;
+        }
+      });
+    });
+
+    // Apply gradient text to all headings that don’t already have it
+    document.querySelectorAll('h1, h2, h3').forEach((heading) => {
+      if (!heading.classList.contains('gradient-text')) {
+        heading.classList.add('gradient-text');
+        heading.setAttribute('data-text', heading.textContent.trim());
+      }
+    });
     const sentinel = new IntersectionObserver((visions) => {
       visions.forEach((vision) => {
         if (vision.isIntersecting) {

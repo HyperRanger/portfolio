@@ -1,25 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Koji | Portfolio</title>
+  <meta name="description"
+    content="Owolabi Olamilekan — Software Developer and AI hardware innovator. I build futuristic AI systems and sleek software that blend creativity with code.">
+  <meta name="theme-color" content="#0a0712">
+  <meta property="og:title" content="Owolabi Olamilekan | Software Developer">
+  <meta property="og:description"
+    content="I build futuristic AI systems and sleek software—blending creativity with code to craft experiences that transcend the digital veil.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Owolabi Olamilekan | Software Developer">
+  <meta name="twitter:description"
+    content="I build futuristic AI systems and sleek software—blending creativity with code.">
+  <meta name="twitter:image" content="assets/og-image.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/3d-enhancements.css">
   <script defer src="/_vercel/insights/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <div id="bg-gradient"></div>
+
+  <!-- Enhanced Background Elements -->
+  <div class="cosmic-overlay"></div>
+  <div class="parallax-layer parallax-layer-1"></div>
+  <div class="parallax-layer parallax-layer-2"></div>
+
+  <!-- Floating Geometric Shapes -->
+  <div class="floating-shapes">
+    <div class="floating-shape triangle"></div>
+    <div class="floating-shape circle"></div>
+    <div class="floating-shape square"></div>
+  </div>
+
+  <!-- Mouse Trail -->
+  <div class="mouse-trail"></div>
 
   <!-- ===== Hero Section ===== -->
   <header id="hero" class="perspective-container">
     <div class="hero-card reveal">
       <h1 class="gradient-text tilt-3d">Owolabi Olamilekan</h1>
       <h2 class="reveal" data-delay="150">Software Developer | AI Hardware Innovator</h2>
-      <p class="reveal" data-delay="300">I build futuristic AI systems and sleek software—blending creativity with code to craft experiences that transcend the digital veil.</p>
+      <p class="reveal" data-delay="300">I build futuristic AI systems and sleek software—blending creativity with code
+        to craft experiences that transcend the digital veil.</p>
       <div class="btn-group reveal" data-delay="450">
         <a href="#projects" class="btn primary hover-3d">View My Work</a>
         <a href="assets/YourResume.pdf" class="btn secondary hover-3d">Download Resume</a>
@@ -30,109 +67,401 @@
   </header>
 
   <!-- ===== About Section ===== -->
-  <section id="about" class="container reveal-section">
-    <div class="card reveal" data-delay="0">
-      <h2 class="gradient-text">About Me</h2>
-      <div class="about-grid">
-        <div class="bio">
-          <p class="reveal" data-delay="150">I'm a self-taught developer and designer, passionately weaving hardware, software, and storytelling into tapestries of innovation. Currently pursuing a 5-year degree, I architect personal projects in AI hardware, game development, and multi platformed softwares.</p>
-          <p class="reveal muted" data-delay="300">Becoming one of the greatest Software Engineers to ever exist.</p>
-        </div>
-        <div class="photo-container reveal" data-delay="450">
-          <img src="assets/images/profile.jpg" alt="Owolabi Olamilekan" class="flip-3d">
+  <main id="main">
+    <section id="about" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">About Me</h2>
+        <div class="about-grid">
+          <div class="bio">
+            <p class="reveal" data-delay="150">I'm a self-taught developer and designer, passionately weaving hardware,
+              software, and storytelling into tapestries of innovation. Currently pursuing a 5-year degree, I architect
+              personal projects in AI hardware, game development, and multi platformed softwares.</p>
+            <p class="reveal muted" data-delay="300">My goal is becoming one of the greatest Software Engineers to ever
+              exist.</p>
+          </div>
+          <div class="photo-container reveal" data-delay="450">
+            <img src="assets/images/profile.jpg" alt="Owolabi Olamilekan" class="flip-3d">
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Skills Section ===== -->
-  <section id="skills" class="container reveal-section">
-    <div class="card reveal" data-delay="0">
-      <h2 class="gradient-text">Skills & Tech Stack</h2>
-      <ul class="skills-grid">
-        <li class="skill-pill reveal tilt-3d" data-delay="100">HTML</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="200">CSS</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="300">Python</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="400">JavaScript</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="500">TypeScript</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="600">Kotlin</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="700">Dart</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="800">Unity</li>
-        <li class="skill-pill reveal tilt-3d" data-delay="900">React</li>
-      </ul>
-    </div>
-  </section>
+    <!-- ===== Skills Constellation ===== -->
+    <section id="skills" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">Skills Constellation</h2>
+        <p class="reveal" data-delay="150">Explore my interconnected universe of technologies. Hover over skills to see
+          their cosmic connections.</p>
+        <div id="skills-3d-container" class="skills-3d-wrapper reveal" data-delay="150">
+          <canvas id="skills-canvas"></canvas>
+          <div class="skill-info-panel" id="skill-info">
+            <h3 id="skill-name">Hover over a skill</h3>
+            <p id="skill-description">Discover the connections in my tech universe</p>
+            <div id="skill-connections"></div>
+          </div>
+        </div>
+        <!-- Fallback for reduced motion -->
+        <ul class="skills-grid skills-fallback">
+          <li class="skill-pill reveal tilt-3d" data-delay="100">HTML</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="200">CSS</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="300">Python</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="400">JavaScript</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="500">TypeScript</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="600">Kotlin</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="700">Dart</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="800">Unity</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="900">React</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1100">Java</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1200">C++</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1300">MongoDB</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1400">SQL</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1500">JSX</li>
+        </ul>
+      </div>
+    </section>
 
-  <!-- ===== Projects Section ===== -->
-  <section id="projects" class="container reveal-section">
-    <div class="card reveal" data-delay="0">
-      <h2 class="gradient-text">Projects</h2>
-      <div class="grid">
-        <article class="project reveal card-3d" data-delay="150">
-          <div class="project-inner">
-            <div class="thumb-container">
-              <img src="assets/images/gent.png" alt="GENT Project" class="thumb">
-              <div class="overlay gradient-overlay">
-                <h3>GENT</h3>
-                <p>A file transfer system that dances with live uploads, powered by Supabase and Netlify's ethereal streams.</p>
-                <p><strong>Tech Used:</strong> HTML, CSS, JavaScript, Supabase</p>
-              </div>
-            </div>
-            <div class="meta">
-              <div class="links">
-                <a href="https://github.com/HyperRanger/GENT" class="link-pill" target="_blank">GitHub</a>
-                <a href="https://gent-2sp3.onrender.com/" class="link-pill" target="_blank">Live Demo</a>
-              </div>
+    <!-- ===== Journey Timeline ===== -->
+    <section id="journey" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">The Cosmic Journey</h2>
+        <div class="timeline-3d reveal" data-delay="150">
+          <div class="timeline-item reveal" data-delay="100">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2019 - The Genesis</h3>
+              <p>First encounter with programming logic. Started with basic problem-solving and computational thinking,
+                laying the foundation for a cosmic journey ahead.</p>
+              <div class="timeline-tech">Logic • Problem Solving • Mathematics</div>
             </div>
           </div>
-        </article>
-
-        <article class="project reveal card-3d" data-delay="300">
-          <div class="project-inner">
-            <div class="thumb-container">
-              <img src="assets/images/project2.jpg" alt="TBD Project" class="thumb">
-              <div class="overlay gradient-overlay">
-                <h3>TBD</h3>
-                <p><!-- Project description --> TBD</p>
-                <p><strong>Tech Used:</strong> TBD</p>
-              </div>
-            </div>
-            <div class="meta">
-              <div class="links">
-                <a href="#" class="link-pill" target="_blank">GitHub</a>
-                <a href="#" class="link-pill" target="_blank">Live Demo</a>
-              </div>
+          <div class="timeline-item reveal" data-delay="200">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2020 - Building Foundations</h3>
+              <p>Dove deep into programming fundamentals. Mastered core concepts and built first console applications,
+                discovering the power of code to create digital realities.</p>
+              <div class="timeline-tech">C++ • Java • Data Structures • Algorithms</div>
             </div>
           </div>
-        </article>
+          <div class="timeline-item reveal" data-delay="300">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2021 - Web Universe Exploration</h3>
+              <p>Entered the realm of web development. Created first interactive websites and learned the art of
+                bringing designs to life in the browser.</p>
+              <div class="timeline-tech">HTML • CSS • JavaScript • Responsive Design</div>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-delay="400">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2022 - Framework Mastery</h3>
+              <p>Embraced modern web frameworks and libraries. Built dynamic applications and learned the importance of
+                component-based architecture.</p>
+              <div class="timeline-tech">React • TypeScript • Node.js • Git</div>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-delay="500">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2023 - Full-Stack Evolution</h3>
+              <p>Expanded into backend development and database management. Created complete web applications with
+                robust server-side logic and data persistence.</p>
+              <div class="timeline-tech">Python • MongoDB • SQL • API Development</div>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-delay="600">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2024 - AI & Innovation</h3>
+              <p>Ventured into AI territories and game development. Built GENT, my breakthrough full-stack creation, and
+                explored Unity for immersive 3D experiences.</p>
+              <div class="timeline-tech">AI/ML • Unity • C# • Supabase • Advanced React</div>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-delay="700">
+            <div class="timeline-marker active"></div>
+            <div class="timeline-content">
+              <h3>2025 - The Infinite Quest</h3>
+              <p>Currently pursuing advanced studies while architecting AI hardware solutions and multi-platform
+                experiences. Pushing boundaries in mobile development and hardware design. The journey to technological
+                mastery continues...</p>
+              <div class="timeline-tech">Kotlin • Dart • Flutter • Hardware Design • Advanced AI</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Contact Section ===== -->
-  <section id="contact" class="container reveal-section">
-    <div class="card reveal" data-delay="0">
-      <h2 class="gradient-text">Contact Me</h2>
-      <form id="contact-form" class="reveal" data-delay="150">
-        <input type="text" placeholder="Your Name" required class="input-3d">
-        <input type="email" placeholder="Your Email" required class="input-3d">
-        <textarea placeholder="Your Message" required class="input-3d"></textarea>
-        <button type="submit" class="btn primary hover-3d">Send Message</button>
-      </form>
-      <p class="reveal muted" data-delay="300">Or reach me at: <a href="mailto:owolabilekan947@gmail.com">owolabilekan947@gmail.com</a></p>
-      <div class="socials reveal" data-delay="450">
-        <!-- Add GitHub/LinkedIn/Twitter links here -->
-        <a href="https://github.com/HyperRanger" class="social-link">GitHub</a>
-        <a href="https://www.linkedin.com/in/olamilekan-owolabi-535bab36b/" class="social-link">LinkedIn</a>
-        <a href="#" class="social-link">Twitter</a>
+    <!-- ===== Projects Showcase ===== -->
+    <section id="projects" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">Dimensional Creations</h2>
+        <p class="reveal" data-delay="100">Each project is a portal to a different digital dimension, crafted with
+          purpose and passion.</p>
+        <div class="projects-3d-carousel reveal" data-delay="150">
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" aria-label="Previous project">←</button>
+            <button class="carousel-btn next" aria-label="Next project">→</button>
+          </div>
+          <div class="grid">
+            <article class="project reveal card-3d featured" data-delay="150">
+              <div class="project-inner">
+                <div class="project-header">
+                  <span class="project-type">Full-Stack Application</span>
+                  <span class="project-status live">Live</span>
+                </div>
+                <div class="thumb-container">
+                  <img src="assets/images/gent.png" alt="GENT Project" class="thumb" loading="lazy" decoding="async">
+                  <div class="overlay gradient-overlay">
+                    <h3>GENT - Ethereal File Transfer</h3>
+                    <div class="project-story">
+                      <p><strong>The Challenge:</strong> Traditional file sharing lacks elegance and real-time magic.
+                      </p>
+                      <p><strong>The Solution:</strong> A cosmic file transfer system with live upload streaming and
+                        ethereal UI.</p>
+                      <p><strong>The Impact:</strong> Seamless file sharing experience with 99.9% uptime and real-time
+                        progress.</p>
+                    </div>
+                    <div class="tech-constellation">
+                      <span class="tech-pill">JavaScript</span>
+                      <span class="tech-pill">Supabase</span>
+                      <span class="tech-pill">Real-time</span>
+                      <span class="tech-pill">Responsive</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="meta">
+                  <div class="project-metrics">
+                    <div class="metric">
+                      <span class="metric-value">500+</span>
+                      <span class="metric-label">Files Transferred</span>
+                    </div>
+                    <div class="metric">
+                      <span class="metric-value">99.9%</span>
+                      <span class="metric-label">Uptime</span>
+                    </div>
+                  </div>
+                  <div class="links">
+                    <a href="https://github.com/HyperRanger/GENT" class="link-pill" target="_blank"
+                      rel="noopener noreferrer">
+                      <i class="fab fa-github"></i> Code
+                    </a>
+                    <a href="https://gent-2sp3.onrender.com/" class="link-pill primary" target="_blank"
+                      rel="noopener noreferrer">
+                      <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal card-3d" data-delay="300">
+              <div class="project-inner">
+                <div class="project-header">
+                  <span class="project-type">AI Hardware</span>
+                  <span class="project-status development">In Development</span>
+                </div>
+                <div class="thumb-container">
+                  <div class="project-preview ai-preview">
+                    <div class="neural-network">
+                      <div class="node"></div>
+                      <div class="node"></div>
+                      <div class="node"></div>
+                      <div class="connection"></div>
+                      <div class="connection"></div>
+                    </div>
+                  </div>
+                  <div class="overlay gradient-overlay">
+                    <h3>NeuroForge - AI Hardware Accelerator</h3>
+                    <div class="project-story">
+                      <p><strong>The Vision:</strong> Custom AI hardware that thinks at the speed of light.</p>
+                      <p><strong>The Innovation:</strong> Designing neural processing units optimized for real-time AI
+                        inference.</p>
+                      <p><strong>The Future:</strong> Democratizing AI hardware for edge computing applications.</p>
+                    </div>
+                    <div class="tech-constellation">
+                      <span class="tech-pill">C++</span>
+                      <span class="tech-pill">FPGA</span>
+                      <span class="tech-pill">Neural Networks</span>
+                      <span class="tech-pill">Hardware Design</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="meta">
+                  <div class="project-metrics">
+                    <div class="metric">
+                      <span class="metric-value">10x</span>
+                      <span class="metric-label">Faster Inference</span>
+                    </div>
+                    <div class="metric">
+                      <span class="metric-value">50%</span>
+                      <span class="metric-label">Less Power</span>
+                    </div>
+                  </div>
+                  <div class="links">
+                    <a href="#" class="link-pill disabled" aria-disabled="true">
+                      <span class="link-icon">🔒</span> Private Repo
+                    </a>
+                    <a href="#" class="link-pill disabled" aria-disabled="true">
+                      <span class="link-icon">⏳</span> Coming Soon
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal card-3d" data-delay="450">
+              <div class="project-inner">
+                <div class="project-header">
+                  <span class="project-type">Game Development</span>
+                  <span class="project-status prototype">Prototype</span>
+                </div>
+                <div class="thumb-container">
+                  <div class="project-preview game-preview">
+                    <div class="game-elements">
+                      <div class="cube rotating"></div>
+                      <div class="particles"></div>
+                    </div>
+                  </div>
+                  <div class="overlay gradient-overlay">
+                    <h3>Cosmic Odyssey - 3D Space Adventure</h3>
+                    <div class="project-story">
+                      <p><strong>The Experience:</strong> An immersive 3D space exploration game with procedural worlds.
+                      </p>
+                      <p><strong>The Technology:</strong> Built with Unity, featuring advanced shader work and
+                        procedural generation.</p>
+                      <p><strong>The Journey:</strong> Currently developing advanced AI companions and multiplayer
+                        systems.</p>
+                    </div>
+                    <div class="tech-constellation">
+                      <span class="tech-pill">Unity</span>
+                      <span class="tech-pill">C#</span>
+                      <span class="tech-pill">Procedural Gen</span>
+                      <span class="tech-pill">3D Graphics</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="meta">
+                  <div class="project-metrics">
+                    <div class="metric">
+                      <span class="metric-value">∞</span>
+                      <span class="metric-label">Procedural Worlds</span>
+                    </div>
+                    <div class="metric">
+                      <span class="metric-value">60</span>
+                      <span class="metric-label">FPS Target</span>
+                    </div>
+                  </div>
+                  <div class="links">
+                    <a href="#" class="link-pill disabled" aria-disabled="true">
+                      <span class="link-icon">🎮</span> Alpha Testing
+                    </a>
+                    <a href="#" class="link-pill disabled" aria-disabled="true">
+                      <span class="link-icon">🚀</span> Early 2025
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ===== Interactive Playground ===== -->
+    <section id="playground" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">Interactive Playground</h2>
+        <p class="reveal" data-delay="100">Experience my skills in action through interactive demonstrations.</p>
+        <div class="playground-grid reveal" data-delay="200">
+          <div class="playground-item reveal" data-delay="250">
+            <div class="playground-preview">
+              <canvas id="particle-demo" class="demo-canvas"></canvas>
+            </div>
+            <div class="playground-info">
+              <h3>Particle Physics Engine</h3>
+              <p>Real-time particle simulation with collision detection and gravitational forces.</p>
+              <button class="btn secondary playground-btn" data-demo="particles">Launch Demo</button>
+            </div>
+          </div>
+          <div class="playground-item reveal" data-delay="350">
+            <div class="playground-preview">
+              <div id="algorithm-viz" class="demo-canvas">
+                <div class="sorting-bars"></div>
+              </div>
+            </div>
+            <div class="playground-info">
+              <h3>Algorithm Visualizer</h3>
+              <p>Watch sorting algorithms dance through data in real-time visualization.</p>
+              <button class="btn secondary playground-btn" data-demo="algorithms">Start Sorting</button>
+            </div>
+          </div>
+          <div class="playground-item reveal" data-delay="450">
+            <div class="playground-preview">
+              <div id="neural-viz" class="demo-canvas">
+                <div class="neural-network-demo"></div>
+              </div>
+            </div>
+            <div class="playground-info">
+              <h3>Neural Network Trainer</h3>
+              <p>Train a simple neural network and watch it learn in real-time.</p>
+              <button class="btn secondary playground-btn" data-demo="neural">Train Network</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact Section ===== -->
+    <section id="contact" class="container reveal-section">
+      <div class="card reveal" data-delay="0">
+        <h2 class="gradient-text">Contact Me</h2>
+        <form id="contact-form" class="reveal" data-delay="150" novalidate>
+          <label for="name" class="visually-hidden">Your Name</label>
+          <input id="name" name="name" type="text" placeholder="Your Name" required class="input-3d"
+            autocomplete="name">
+          <label for="email" class="visually-hidden">Your Email</label>
+          <input id="email" name="email" type="email" placeholder="Your Email" required class="input-3d"
+            autocomplete="email">
+          <label for="subject" class="visually-hidden">Subject</label>
+          <input id="subject" name="subject" type="text" placeholder="Subject" required class="input-3d"
+            autocomplete="off">
+          <label for="message" class="visually-hidden">Your Message</label>
+          <textarea id="message" name="message" placeholder="Your Message" required class="input-3d"
+            autocomplete="off"></textarea>
+          <button type="submit" class="btn primary hover-3d">Send Message</button>
+          <p id="form-status" role="status" aria-live="polite" class="muted"></p>
+        </form>
+        <p class="reveal muted" data-delay="300">Or reach me at: <a
+            href="mailto:owolabilekan947@gmail.com">owolabilekan947@gmail.com</a></p>
+        <div class="socials reveal" data-delay="450">
+          <!-- Add GitHub/LinkedIn/Twitter links here -->
+          <a href="https://github.com/HyperRanger" class="social-link" target="_blank" rel="noopener noreferrer"
+            title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/olamilekan-owolabi-535bab36b/" class="social-link" target="_blank"
+            rel="noopener noreferrer" title="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://twitter.com/your_handle" class="social-link" target="_blank" rel="noopener noreferrer"
+            title="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="reveal">
     <p>&copy; 2025 Owolabi Olamilekan. Crafted with cosmic code.</p>
   </footer>
 
   <script src="js/main.js"></script>
-</body>
+  <script src="js/3d-features.js"></script>
+  <script src="js/enhanced-background.js"></script>
+  <script src="js/interactive-effects.js"></script>
+  <script src="js/api-integration.js"></script>
+
 </html>

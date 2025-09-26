@@ -1,0 +1,76 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce Platform",
+      "description": "A full-stack e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment integration, and admin dashboard.",
+      "image": "assets/project1.jpg",
+      "technologies": ["React", "Node.js", "MongoDB", "Express", "Stripe API"],
+      "category": "Full Stack",
+      "featured": true,
+      "githubUrl": "https://github.com/yourusername/ecommerce-platform",
+      "liveUrl": "https://your-ecommerce-demo.com",
+      "completedDate": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "title": "Task Management App",
+      "description": "A collaborative task management application with real-time updates. Users can create projects, assign tasks, set deadlines, and track progress with an intuitive dashboard.",
+      "image": "assets/project2.jpg",
+      "technologies": ["Vue.js", "Firebase", "Vuetify", "Socket.io"],
+      "category": "Frontend",
+      "featured": true,
+      "githubUrl": "https://github.com/yourusername/task-manager",
+      "liveUrl": "https://your-task-manager.com",
+      "completedDate": "2023-11-20"
+    },
+    {
+      "id": 3,
+      "title": "Weather Analytics Dashboard",
+      "description": "A responsive weather analytics dashboard that displays real-time weather data, forecasts, and historical trends with interactive charts and maps.",
+      "image": "assets/project3.jpg",
+      "technologies": ["JavaScript", "D3.js", "OpenWeather API", "Chart.js"],
+      "category": "Data Visualization",
+      "featured": false,
+      "githubUrl": "https://github.com/yourusername/weather-dashboard",
+      "liveUrl": "https://your-weather-dashboard.com",
+      "completedDate": "2023-09-10"
+    },
+    {
+      "id": 4,
+      "title": "Social Media API",
+      "description": "A RESTful API for a social media platform with features like user profiles, posts, comments, likes, and real-time notifications. Built with scalability in mind.",
+      "image": "assets/project4.jpg",
+      "technologies": ["Python", "Django", "PostgreSQL", "Redis", "Docker"],
+      "category": "Backend",
+      "featured": true,
+      "githubUrl": "https://github.com/yourusername/social-api",
+      "liveUrl": null,
+      "completedDate": "2023-12-05"
+    },
+    {
+      "id": 5,
+      "title": "Machine Learning Image Classifier",
+      "description": "An image classification web application using TensorFlow.js. Users can upload images and get real-time predictions with confidence scores.",
+      "image": "assets/project5.jpg",
+      "technologies": ["TensorFlow.js", "Python", "Flask", "OpenCV", "React"],
+      "category": "Machine Learning",
+      "featured": false,
+      "githubUrl": "https://github.com/yourusername/ml-classifier",
+      "liveUrl": "https://your-ml-classifier.com",
+      "completedDate": "2024-02-28"
+    },
+    {
+      "id": 6,
+      "title": "Cryptocurrency Tracker",
+      "description": "A real-time cryptocurrency tracking application with portfolio management, price alerts, and market analysis tools. Features beautiful charts and responsive design.",
+      "image": "assets/project6.jpg",
+      "technologies": ["React Native", "CoinGecko API", "SQLite", "Redux"],
+      "category": "Mobile",
+      "featured": false,
+      "githubUrl": "https://github.com/yourusername/crypto-tracker",
+      "liveUrl": null,
+      "completedDate": "2023-10-15"
+    }
+  ]
+}
