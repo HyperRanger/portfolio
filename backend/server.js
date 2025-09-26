@@ -32,8 +32,13 @@ app.use(limiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://yourdomain.com'] // Replace with your actual domain
-    : ['http://localhost:3001', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:3000'],
+    ? ['https://portfolio-rouge-xi-87.vercel.app']  // Your deployed frontend
+    : [
+        'http://localhost:3001',
+        'http://127.0.0.1:5500',
+        'http://localhost:5500',
+        'http://localhost:3000'
+      ],
   credentials: true
 }));
 
