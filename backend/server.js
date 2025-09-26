@@ -60,9 +60,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files from the parent directory (your frontend)
-app.use(express.static(path.join(__dirname, '..')));
-
 // Routes
 
 // Get all projects
@@ -141,7 +138,7 @@ app.post('/api/contact',
 
       console.log('🔧 Creating email transporter...');
       // Create transporter with better error handling
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user: process.env.EMAIL_USER,
@@ -235,18 +232,6 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// Serve the main HTML file for any non-API routes
-app.get('*', (req, res) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
-  } else {
-    res.status(404).json({
-      success: false,
-      message: 'API endpoint not found'
-    });
-  }
-});
-
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Server error:', error);
@@ -258,9 +243,9 @@ app.use((error, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Portfolio backend server running on port ${PORT}`);
-  console.log(`📧 Make sure to configure your email settings in .env file`);
-  console.log(`🌐 Frontend served at: http://localhost:${PORT}`);
+  console.log(`🚀 Portfolio backend running on port ${PORT}`);
+  console.log(`📧 Email enabled: ${!!process.env.EMAIL_USER}`);
+
 });
 
 module.exports = app;
