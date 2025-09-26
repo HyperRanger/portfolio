@@ -3,8 +3,7 @@
 
 class PortfolioAPI {
   constructor() {
-    this.baseURL = window.location.origin;
-    this.apiURL = `${this.baseURL}/api`;
+    this.apiURL = "https://portfolio-xj76.onrender.com/api";;
     this.init();
   }
 
@@ -312,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new PortfolioAPI();
 });
 
-// Add some CSS for the new elements
+// CSS for the new elements
 const style = document.createElement('style');
 style.textContent = `
   .project-preview.default-preview {
