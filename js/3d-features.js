@@ -139,21 +139,84 @@
       scene.add(ringParticles);
       skillNodes.push({ sphere, glow: glowGroup, skill, ringParticles });
 
-      // Create text label
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = 256;
-      canvas.height = 64;
-      context.fillStyle = '#ffffff';
-      context.font = 'bold 20px Inter';
-      context.textAlign = 'center';
-      context.fillText(skill.name, 128, 40);
+      // Create icon-like label using a canvas texture (emoji / initials + name)
+      const createLabelTexture = (skill) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 512;
+        canvas.height = 160;
 
-      const texture = new THREE.CanvasTexture(canvas);
+        // Background rounded rect for contrast
+        ctx.fillStyle = 'rgba(10,10,12,0.6)';
+        const radius = 18;
+        const w = canvas.width, h = canvas.height;
+        ctx.beginPath();
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(w - radius, 0);
+        ctx.quadraticCurveTo(w, 0, w, radius);
+        ctx.lineTo(w, h - radius);
+        ctx.quadraticCurveTo(w, h, w - radius, h);
+        ctx.lineTo(radius, h);
+        ctx.quadraticCurveTo(0, h, 0, h - radius);
+        ctx.lineTo(0, radius);
+        ctx.quadraticCurveTo(0, 0, radius, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        // Emoji / initial mapping to simulate icons
+        const emojiMap = {
+          'JavaScript': 'JS',
+          'TypeScript': 'TS',
+          'Python': '🐍',
+          'React': '⚛️',
+          'HTML': '</>',
+          'CSS': 'CSS',
+          'Unity': 'U',
+          'C++': 'C++',
+          'MongoDB': 'DB',
+          'JSX': 'JSX',
+          'Java': '☕',
+          'Kotlin': 'K',
+          'Dart': 'D',
+          'SQL': 'DB',
+          'C#': 'C#'
+        };
+
+        const icon = emojiMap[skill.name] || skill.name.slice(0, 2).toUpperCase();
+
+        // Draw icon circle
+        const circleX = 80, circleY = 80, circleR = 44;
+        ctx.beginPath();
+        ctx.arc(circleX, circleY, circleR, 0, Math.PI * 2);
+        ctx.fillStyle = skill.color || '#888888';
+        ctx.fill();
+
+        // Icon text (emoji or initials)
+        ctx.font = 'bold 44px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(icon, circleX, circleY + 2);
+
+        // Skill name to the right
+        ctx.font = '700 28px Inter, Arial';
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(skill.name, 140, 85);
+
+        // Subtle stroke for readability
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.strokeText(skill.name, 140, 85);
+
+        return new THREE.CanvasTexture(canvas);
+      };
+
+      const texture = createLabelTexture(skill);
       const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
       const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(skill.position[0], skill.position[1] + 0.5, skill.position[2]);
-      sprite.scale.set(1, 0.25, 1);
+      sprite.position.set(skill.position[0], skill.position[1] + 0.6, skill.position[2]);
+      sprite.scale.set(2.0, 0.65, 1);
       scene.add(sprite);
     });
 
