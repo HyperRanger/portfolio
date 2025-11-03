@@ -103,13 +103,10 @@ body {
   font-family: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   /* Unified space background - seamless across all sections */
   background: 
-    radial-gradient(ellipse at 20% 10%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 30%, rgba(0, 180, 255, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 70%, rgba(255, 209, 102, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 20%, rgba(0, 180, 255, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 10% 60%, rgba(255, 209, 102, 0.05) 0%, transparent 70%),
-    linear-gradient(180deg, #001d3d 0%, #000814 30%, #000814 70%, #001122 100%);
+    /* Simplified and cleaner hero/background for better contrast and performance */
+    linear-gradient(180deg, #07060a 0%, #0a0712 30%, #0f1724 60%, #07102a 100%),
+    radial-gradient(circle at 20% 20%, rgba(255, 209, 102, 0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(0, 180, 255, 0.04) 0%, transparent 60%);
   background-attachment: fixed;
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   color: var(--text);
@@ -123,6 +120,9 @@ body {
   position: relative;
   min-height: 100vh;
 }
+
+/* Prevent fixed nav from overlapping content */
+main { padding-top: 76px; }
 
 /* Accessible focus styles and interaction fixes */
 :where(a, button, input, textarea, select, .btn, .link-pill, .social-link, .skill-pill) {

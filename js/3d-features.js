@@ -14,7 +14,9 @@
      ============================================================================== */
   
   const initSkillsConstellation = () => {
-    const container = document.getElementById('skills-canvas');
+    // Use the wrapper container for the 3D scene. The original markup contains a <canvas id="skills-canvas"> inside
+    // a wrapper with id `skills-3d-container`. Target the wrapper to ensure we append the Three renderer correctly.
+    const container = document.getElementById('skills-3d-container') || document.getElementById('skills-canvas');
     if (!container) return;
 
     // Show fallback if THREE.js not available or reduced motion
@@ -50,12 +52,15 @@
       powerPreference: "high-performance"
     });
     
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
+  renderer.setSize(container.offsetWidth, container.offsetHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    container.appendChild(renderer.domElement);
+  // If the container already has an inner <canvas> (from markup or fallback), hide it so our WebGL canvas can occupy the area.
+  const existingCanvas = container.querySelector && container.querySelector('canvas');
+  if (existingCanvas) existingCanvas.style.display = 'none';
+  container.appendChild(renderer.domElement);
     
     // Add ambient lighting
     const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
@@ -360,8 +365,8 @@
       return descriptions[skillName] || 'A powerful technology in my arsenal.';
     };
 
-    // Disable hover interactions to keep simple continuous motion
-container.removeEventListener?.('mousemove', onMouseMove);
+  // Disable hover interactions to keep simple continuous motion (if present)
+  if (container && container.removeEventListener) container.removeEventListener('mousemove', onMouseMove);
 
     // Enhanced animation loop
     const animate = () => {
