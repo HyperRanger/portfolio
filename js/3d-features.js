@@ -75,7 +75,10 @@
     pointLight2.position.set(-10, -10, 10);
     scene.add(pointLight2);
 
-    // Create skill nodes
+  // Texture loader for skill icons
+  const loader = new THREE.TextureLoader();
+
+  // Create skill nodes
     const skillNodes = [];
     const skillConnections = [];
 
@@ -132,12 +135,29 @@
       glowGroup.position.copy(sphere.position);
       
       // Particle ring around each skill
-      const ringParticles = createSkillRing(skill.color, sphere.position);
-      
+      // Try to load an SVG icon for the skill from assets/icons/<name>.svg.
+      // Fallback will be the canvas-generated label already in place.
+      const normalizeName = (str) => str.toLowerCase().replace(/\+/g, 'plus').replace(/#/g, 'sharp').replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g,'');
+      const iconPath = `assets/icons/${normalizeName(skill.name)}.svg`;
+
+      let iconTexture = loader.load(iconPath, (tex) => {
+        tex.encoding = THREE.sRGBEncoding;
+        tex.needsUpdate = true;
+      }, undefined, () => {
+        // onError - texture load failed. We'll rely on the canvas label texture already created below.
+      });
+
+      // Create an icon sprite (larger, more visible)
+      const iconMaterial = new THREE.SpriteMaterial({ map: iconTexture, transparent: true, opacity: 1 });
+      const iconSprite = new THREE.Sprite(iconMaterial);
+      iconSprite.position.set(skill.position[0], skill.position[1] + 0.2, skill.position[2]);
+      iconSprite.scale.set(0.9, 0.9, 1);
+
       scene.add(sphere);
       scene.add(glowGroup);
-      scene.add(ringParticles);
-      skillNodes.push({ sphere, glow: glowGroup, skill, ringParticles });
+      scene.add(iconSprite);
+      // store node and sprite; we'll use `pulse` to implement chain reactions
+      skillNodes.push({ sphere, glow: glowGroup, skill, iconSprite, pulse: 0 });
 
       // Create icon-like label using a canvas texture (emoji / initials + name)
       const createLabelTexture = (skill) => {
@@ -213,11 +233,12 @@
       };
 
       const texture = createLabelTexture(skill);
-      const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
-      const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(skill.position[0], skill.position[1] + 0.6, skill.position[2]);
-      sprite.scale.set(2.0, 0.65, 1);
-      scene.add(sprite);
+  // Add the textual label as a subtle sprite beneath/next to the icon (kept for accessibility)
+  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.95 });
+  const sprite = new THREE.Sprite(spriteMaterial);
+  sprite.position.set(skill.position[0], skill.position[1] + 0.9, skill.position[2]);
+  sprite.scale.set(1.8, 0.6, 1);
+  scene.add(sprite);
     });
 
     // Create enhanced connections with animated flow
@@ -233,39 +254,7 @@
       });
     });
     
-    // Helper function to create skill particle rings
-    function createSkillRing(color, position) {
-      const ringGeometry = new THREE.BufferGeometry();
-      const ringPositions = new Float32Array(60);
-      const ringColors = new Float32Array(60);
-      
-      for (let i = 0; i < 20; i++) {
-        const angle = (i / 20) * Math.PI * 2;
-        const radius = 0.8;
-        
-        ringPositions[i * 3] = position.x + Math.cos(angle) * radius;
-        ringPositions[i * 3 + 1] = position.y + Math.sin(angle) * radius;
-        ringPositions[i * 3 + 2] = position.z;
-        
-        const c = new THREE.Color(color);
-        ringColors[i * 3] = c.r;
-        ringColors[i * 3 + 1] = c.g;
-        ringColors[i * 3 + 2] = c.b;
-      }
-      
-      ringGeometry.setAttribute('position', new THREE.BufferAttribute(ringPositions, 3));
-      ringGeometry.setAttribute('color', new THREE.BufferAttribute(ringColors, 3));
-      
-      const ringMaterial = new THREE.PointsMaterial({
-        size: 0.05,
-        transparent: true,
-        opacity: 0.6,
-        vertexColors: true,
-        blending: THREE.AdditiveBlending
-      });
-      
-      return new THREE.Points(ringGeometry, ringMaterial);
-    }
+    // (Ring particle system removed — replaced by icon sprites for clearer visuals)
     
     // Helper function to create animated connections
     function createAnimatedConnection(skill1, skill2) {
@@ -478,16 +467,54 @@
         node.glow.rotation.x -= 0.005;
         node.glow.rotation.y -= 0.005;
         
-        // Animate particle rings
-        if (node.ringParticles) {
-          node.ringParticles.position.copy(node.sphere.position);
-          node.ringParticles.rotation.z += 0.02;
-          
-          // Pulsing effect
-          const pulse = 1 + Math.sin(time * 2 + index) * 0.2;
-          node.ringParticles.scale.setScalar(pulse);
+        // Update icon sprite position & apply pulse-driven scale/opacity for chain reaction bounce
+        if (node.iconSprite) {
+          node.iconSprite.position.copy(node.sphere.position);
+          node.iconSprite.position.y = node.sphere.position.y + 0.2;
+          // decay pulse
+          node.pulse *= 0.94;
+
+          // if pulse active, amplify bounce and icon scale
+          if (node.pulse > 0.02) {
+            node.sphere.userData.bounceIntensity = 1 + node.pulse * 3;
+            node.sphere.userData.bounceSpeed = 1 + node.pulse * 2;
+            const s = 0.9 + Math.min(2.5, 1 + node.pulse * 1.8);
+            node.iconSprite.scale.setScalar(s);
+            if (node.iconSprite.material) node.iconSprite.material.opacity = Math.min(1, 0.6 + node.pulse * 0.6);
+          } else {
+            // settle back to base
+            node.sphere.userData.bounceIntensity = 1.0;
+            node.sphere.userData.bounceSpeed = 1.0;
+            node.iconSprite.scale.setScalar(0.9);
+            if (node.iconSprite.material) node.iconSprite.material.opacity = 1;
+          }
         }
       });
+
+      // Chain reaction propagation: if a node has pulse, transfer to nearby nodes
+      for (let i = 0; i < skillNodes.length; i++) {
+        const a = skillNodes[i];
+        if (!a || a.pulse <= 0.01) continue;
+        for (let j = 0; j < skillNodes.length; j++) {
+          if (i === j) continue;
+          const b = skillNodes[j];
+          const dx = a.sphere.position.x - b.sphere.position.x;
+          const dy = a.sphere.position.y - b.sphere.position.y;
+          const dz = a.sphere.position.z - b.sphere.position.z;
+          const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+          const threshold = 2.2; // influence radius
+          if (dist < threshold) {
+            const influence = (1 - dist / threshold) * 0.4;
+            b.pulse += a.pulse * influence * 0.5;
+          }
+        }
+      }
+
+      // Occasional random spark to keep motion alive
+      if (Math.random() < 0.003) {
+        const idx = Math.floor(Math.random() * skillNodes.length);
+        if (skillNodes[idx]) skillNodes[idx].pulse += 0.9 + Math.random() * 0.8;
+      }
       
       // Animate connection flows
       skillConnections.forEach(connection => {
@@ -532,6 +559,20 @@
     };
 
     window.addEventListener('resize', handleResize);
+
+    // Pointer interaction to trigger a pulse on click/tap (chain reaction)
+    container.addEventListener && container.addEventListener('pointerdown', (ev) => {
+      const rect = container.getBoundingClientRect();
+      const x = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
+      const intersects = raycaster.intersectObjects(skillNodes.map(n => n.sphere));
+      if (intersects.length > 0) {
+        const obj = intersects[0].object;
+        const node = skillNodes.find(n => n.sphere === obj);
+        if (node) node.pulse += 1.6;
+      }
+    });
   };
 
   // Physics-based skills bouncing system
