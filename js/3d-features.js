@@ -9,6 +9,40 @@
 
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Animation / physics tuning constants
+  const SPEED_FACTOR = 0.1;            // overall slowdown multiplier (0.1 = 10% of original speed)
+  const PULSE_DECAY = 0.95;            // per-frame pulse decay (closer to 1 = slower decay)
+  const PULSE_TRANSFER = 0.5;          // fraction transferred during chain propagation
+  const INFLUENCE_RADIUS = 2.2;       // distance for chain reaction influence
+  const RANDOM_SPARK_PROB = 0.003;     // chance per frame to spawn a random pulse
+
+  // Icon paths (prefer official local icons, then local assets, then CDN fallback)
+  const ICON_OFFICIAL_PATH = 'assets/icons/official/';
+  const ICON_LOCAL_PATH = 'assets/icons/';
+  const ICON_CDN_BASE = 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/';
+
+  // Normalizer for icon filenames and known overrides
+  const normalizeNameForIcon = (str) => {
+    const map = {
+      'C++': 'cplusplus',
+      'C#': 'csharp',
+      'HTML': 'html5',
+      'CSS': 'css3',
+      'JSX': 'jsx',
+      'MongoDB': 'mongodb',
+      'JavaScript': 'javascript',
+      'TypeScript': 'typescript',
+      'Python': 'python',
+      'React': 'react',
+      'Java': 'java',
+      'Kotlin': 'kotlin',
+      'Dart': 'dart',
+      'SQL': 'sql'
+    };
+    if (map[str]) return map[str];
+    return str.toLowerCase().replace(/\+/g, 'plus').replace(/#/g, 'sharp').replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g,'');
+  };
+
   /* ==============================================================================
      3D SKILLS CONSTELLATION
      ============================================================================== */
@@ -286,7 +320,8 @@
         startPos: new THREE.Vector3(...skill1.position),
         endPos: new THREE.Vector3(...skill2.position),
         progress: 0,
-        speed: 0.01 + Math.random() * 0.02
+        // slower flow speeds multiplied by global SPEED_FACTOR
+        speed: (0.01 + Math.random() * 0.02) * SPEED_FACTOR
       };
       
       return { line, flow, skill1, skill2 };
@@ -426,15 +461,15 @@
       
       const time = Date.now() * 0.001;
       
-      // Rotate the entire constellation slowly
-      scene.rotation.y += 0.001;
-      scene.rotation.x = Math.sin(time * 0.3) * 0.1;
+  // Rotate the entire constellation slowly (slowed by SPEED_FACTOR)
+  scene.rotation.y += 0.001 * SPEED_FACTOR;
+  scene.rotation.x = Math.sin(time * 0.3 * SPEED_FACTOR) * 0.1;
       
       // Animate skill nodes with more complex movements
       skillNodes.forEach((node, index) => {
-        // Sphere rotation
-        node.sphere.rotation.x += 0.01;
-        node.sphere.rotation.y += 0.01;
+  // Sphere rotation (slower)
+  node.sphere.rotation.x += 0.01 * SPEED_FACTOR;
+  node.sphere.rotation.y += 0.01 * SPEED_FACTOR;
         
         // Complex floating animation with bouncing
         const bounceIntensity = node.sphere.userData.bounceIntensity || 1.0;
@@ -454,7 +489,7 @@
           orbitOffset.z += Math.sin(time * bounceSpeed * 2.5 + index) * 0.2 * bounceIntensity;
           
           // Add some randomness to make it more lively
-          const randomBounce = Math.sin(time * 4 + index * 1.5) * 0.1 * bounceIntensity;
+          const randomBounce = Math.sin(time * 4 * SPEED_FACTOR + index * 1.5) * 0.1 * bounceIntensity * SPEED_FACTOR;
           floatOffset += randomBounce;
         }
         
@@ -464,15 +499,15 @@
         
         // Update glow position
         node.glow.position.copy(node.sphere.position);
-        node.glow.rotation.x -= 0.005;
-        node.glow.rotation.y -= 0.005;
+  node.glow.rotation.x -= 0.005 * SPEED_FACTOR;
+  node.glow.rotation.y -= 0.005 * SPEED_FACTOR;
         
         // Update icon sprite position & apply pulse-driven scale/opacity for chain reaction bounce
         if (node.iconSprite) {
           node.iconSprite.position.copy(node.sphere.position);
           node.iconSprite.position.y = node.sphere.position.y + 0.2;
-          // decay pulse
-          node.pulse *= 0.94;
+          // decay pulse (use tuned constant)
+          node.pulse *= PULSE_DECAY;
 
           // if pulse active, amplify bounce and icon scale
           if (node.pulse > 0.02) {
@@ -502,10 +537,10 @@
           const dy = a.sphere.position.y - b.sphere.position.y;
           const dz = a.sphere.position.z - b.sphere.position.z;
           const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
-          const threshold = 2.2; // influence radius
+          const threshold = INFLUENCE_RADIUS; // influence radius (tunable)
           if (dist < threshold) {
             const influence = (1 - dist / threshold) * 0.4;
-            b.pulse += a.pulse * influence * 0.5;
+            b.pulse += a.pulse * influence * PULSE_TRANSFER;
           }
         }
       }
@@ -608,24 +643,51 @@
       { name: 'C#', color: '#239120', category: 'gamedev' }
     ];
     
-    // Physics objects
+    // Physics objects (with icon image support and pulse property)
     const skillBalls = skills.map((skill, index) => ({
       ...skill,
       x: Math.random() * (physicsCanvas.width - 80) + 40,
       y: Math.random() * (physicsCanvas.height - 80) + 40,
-      vx: (Math.random() - 0.5) * 4,
-      vy: (Math.random() - 0.5) * 4,
-      radius: 25,
+      vx: (Math.random() - 0.5) * 4 * SPEED_FACTOR,
+      vy: (Math.random() - 0.5) * 4 * SPEED_FACTOR,
+      radius: 30,
       mass: 1,
-      id: index
+      id: index,
+      pulse: 0,
+      img: null,
+      imgLoaded: false
     }));
+
+    // Preload icon images for fallback: try official local, then local assets, then CDN
+    skillBalls.forEach((b) => {
+      const slug = normalizeNameForIcon(b.name);
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => { b.img = img; b.imgLoaded = true; };
+      img.onerror = () => {
+        // try local fallback
+        const img2 = new Image();
+        img2.crossOrigin = 'anonymous';
+        img2.onload = () => { b.img = img2; b.imgLoaded = true; };
+        img2.onerror = () => {
+          // last-resort CDN
+          const img3 = new Image();
+          img3.crossOrigin = 'anonymous';
+          img3.onload = () => { b.img = img3; b.imgLoaded = true; };
+          img3.onerror = () => { b.imgLoaded = false; };
+          img3.src = ICON_CDN_BASE + slug + '.svg';
+        };
+        img2.src = ICON_LOCAL_PATH + slug + '.svg';
+      };
+      img.src = ICON_OFFICIAL_PATH + slug + '.svg';
+    });
     
     // Physics simulation
     const updatePhysics = () => {
       skillBalls.forEach((ball, i) => {
-        // Update position
-        ball.x += ball.vx;
-        ball.y += ball.vy;
+  // Update position
+  ball.x += ball.vx;
+  ball.y += ball.vy;
         
         // Wall collision
         if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= physicsCanvas.width) {
@@ -674,13 +736,13 @@
           }
         });
         
-        // Friction
-        ball.vx *= 0.995;
-        ball.vy *= 0.995;
+        // Friction (slightly stronger) and subtle noise scaled by SPEED_FACTOR
+        ball.vx *= 0.99;
+        ball.vy *= 0.99;
         
-        // Add slight random movement to keep things active
-        ball.vx += (Math.random() - 0.5) * 0.1;
-        ball.vy += (Math.random() - 0.5) * 0.1;
+        // Add slight random movement to keep things active (slowed)
+        ball.vx += (Math.random() - 0.5) * 0.06 * SPEED_FACTOR;
+        ball.vy += (Math.random() - 0.5) * 0.06 * SPEED_FACTOR;
       });
     };
     
@@ -689,36 +751,72 @@
       ctx.clearRect(0, 0, physicsCanvas.width, physicsCanvas.height);
       
       skillBalls.forEach(ball => {
-        // Draw skill ball with glow
-        const gradient = ctx.createRadialGradient(ball.x, ball.y, 0, ball.x, ball.y, ball.radius * 2);
-        gradient.addColorStop(0, ball.color + 'FF');
-        gradient.addColorStop(0.7, ball.color + '80');
-        gradient.addColorStop(1, ball.color + '00');
-        
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius * 2, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Draw main ball
-        ctx.fillStyle = ball.color;
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Draw skill name
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Inter';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(ball.name, ball.x, ball.y);
+        // Draw icon if available, otherwise fallback to colored ball with name
+        if (ball.imgLoaded && ball.img) {
+          const size = ball.radius * 2;
+          // apply pulse scaling
+          const scale = 1 + (ball.pulse || 0) * 0.6;
+          ctx.save();
+          ctx.translate(ball.x, ball.y);
+          ctx.globalAlpha = Math.min(1, 0.8 + (ball.pulse || 0) * 0.6);
+          ctx.drawImage(ball.img, -size/2 * scale, -size/2 * scale, size * scale, size * scale);
+          ctx.restore();
+        } else {
+          // Draw skill ball with glow
+          const gradient = ctx.createRadialGradient(ball.x, ball.y, 0, ball.x, ball.y, ball.radius * 2);
+          gradient.addColorStop(0, ball.color + 'FF');
+          gradient.addColorStop(0.7, ball.color + '80');
+          gradient.addColorStop(1, ball.color + '00');
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, ball.radius * 2, 0, Math.PI * 2);
+          ctx.fill();
+          // Draw main ball
+          ctx.fillStyle = ball.color;
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+          ctx.fill();
+          // Draw skill name as fallback
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 12px Inter';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(ball.name, ball.x, ball.y);
+        }
       });
     };
     
+    // Chain reaction propagation for canvas fallback
+    const propagateCanvasPulses = () => {
+      for (let i = 0; i < skillBalls.length; i++) {
+        const a = skillBalls[i];
+        if (!a || a.pulse <= 0.01) continue;
+        for (let j = 0; j < skillBalls.length; j++) {
+          if (i === j) continue;
+          const b = skillBalls[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < INFLUENCE_RADIUS * 60) { // scale threshold to canvas pixels
+            const influence = (1 - dist / (INFLUENCE_RADIUS * 60)) * 0.4;
+            b.pulse += a.pulse * influence * PULSE_TRANSFER;
+          }
+        }
+      }
+    };
+
     // Animation loop
     const animate = () => {
       updatePhysics();
+      propagateCanvasPulses();
       render();
+      // decay pulses
+      skillBalls.forEach(b => b.pulse *= PULSE_DECAY);
+      // random spark
+      if (Math.random() < RANDOM_SPARK_PROB) {
+        const idx = Math.floor(Math.random() * skillBalls.length);
+        if (skillBalls[idx]) skillBalls[idx].pulse += 0.9 + Math.random() * 0.8;
+      }
       requestAnimationFrame(animate);
     };
     
@@ -731,6 +829,21 @@
     };
     
     window.addEventListener('resize', handleResize);
+    
+    // pointer interaction for canvas fallback: trigger pulse on click/tap
+    container.addEventListener && container.addEventListener('pointerdown', (ev) => {
+      const rect = container.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      for (let i = 0; i < skillBalls.length; i++) {
+        const b = skillBalls[i];
+        const dx = x - b.x; const dy = y - b.y;
+        if (Math.sqrt(dx*dx + dy*dy) < b.radius * 1.2) {
+          b.pulse += 1.6;
+          break;
+        }
+      }
+    });
   };
 
   /* ==============================================================================
