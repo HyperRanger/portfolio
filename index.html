@@ -32,6 +32,22 @@
 
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
+  <!-- Top Navigation -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary navigation">
+    <div class="nav-container container">
+      <a class="brand" href="/">Koji</a>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle navigation">
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
+      <ul id="primary-menu" class="nav-menu" role="menu">
+        <li role="none"><a role="menuitem" href="#about">About</a></li>
+        <li role="none"><a role="menuitem" href="#skills">Skills</a></li>
+        <li role="none"><a role="menuitem" href="#projects">Projects</a></li>
+        <li role="none"><a role="menuitem" href="#playground">Playground</a></li>
+        <li role="none"><a role="menuitem" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <div id="bg-gradient"></div>
 
@@ -54,9 +70,8 @@
   <header id="hero" class="perspective-container">
     <div class="hero-card reveal">
       <h1 class="gradient-text tilt-3d">Owolabi Olamilekan</h1>
-      <h2 class="reveal" data-delay="150">Software Developer | AI Hardware Innovator</h2>
-      <p class="reveal" data-delay="300">I build futuristic AI systems and sleek software—blending creativity with code
-        to craft experiences that transcend the digital veil.</p>
+      <h2 class="reveal" data-delay="150">Software Engineer, Hardware innovator | CEO Genesis Technology | Musician</h2>
+      <p class="reveal" data-delay="300">I build futuristic AI systems and softwares that are just too good to be true😌.</p>
       <div class="btn-group reveal" data-delay="450">
         <a href="#projects" class="btn primary hover-3d">View My Work</a>
         <a href="assets/YourResume.pdf" class="btn secondary hover-3d">Download Resume</a>
@@ -73,10 +88,10 @@
         <h2 class="gradient-text">About Me</h2>
         <div class="about-grid">
           <div class="bio">
-            <p class="reveal" data-delay="150">I'm a self-taught developer and designer, passionately weaving hardware,
-              software, and storytelling into tapestries of innovation. Currently pursuing a 5-year degree, I architect
-              personal projects in AI hardware, game development, and multi platformed softwares.</p>
-            <p class="reveal muted" data-delay="300">My goal is becoming one of the greatest Software Engineers to ever
+            <p class="reveal" data-delay="150">I'm a self-taught developer and designer, proudly joining hardware,
+              software, and storytelling into newer dimensions of innovation. Currently pursuing a 5-year degree. I architect
+              personal projects in AI hardware, game development [still learning], and multi platformed softwares.</p>
+            <p class="reveal muted" data-delay="300">My goal is becoming one of the greatest Software Engineers | Techie to ever
               exist.</p>
           </div>
           <div class="photo-container reveal" data-delay="450">
@@ -89,9 +104,9 @@
     <!-- ===== Skills Constellation ===== -->
     <section id="skills" class="container reveal-section">
       <div class="card reveal" data-delay="0">
-        <h2 class="gradient-text">Skills Constellation</h2>
-        <p class="reveal" data-delay="150">Explore my interconnected universe of technologies. Hover over skills to see
-          their cosmic connections.</p>
+        <h2 class="gradient-text">Skills Tree</h2>
+        <p class="reveal" data-delay="150">Explore my interconnected universe of technologies [in Zordon's voice]. Hover over skills to see
+          their connections.</p>
         <div id="skills-3d-container" class="skills-3d-wrapper reveal" data-delay="150">
           <canvas id="skills-canvas"></canvas>
           <div class="skill-info-panel" id="skill-info">
@@ -116,6 +131,8 @@
           <li class="skill-pill reveal tilt-3d" data-delay="1300">MongoDB</li>
           <li class="skill-pill reveal tilt-3d" data-delay="1400">SQL</li>
           <li class="skill-pill reveal tilt-3d" data-delay="1500">JSX</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1600">Rust</li>
+          <li class="skill-pill reveal tilt-3d" data-delay="1700">C#</li>
         </ul>
       </div>
     </section>
@@ -123,7 +140,7 @@
     <!-- ===== Journey Timeline ===== -->
     <section id="journey" class="container reveal-section">
       <div class="card reveal" data-delay="0">
-        <h2 class="gradient-text">The Cosmic Journey</h2>
+        <h2 class="gradient-text">The Journey</h2>
         <div class="timeline-3d reveal" data-delay="150">
           <div class="timeline-item reveal" data-delay="100">
             <div class="timeline-marker"></div>
@@ -138,9 +155,8 @@
             <div class="timeline-marker"></div>
             <div class="timeline-content">
               <h3>2020 - Building Foundations</h3>
-              <p>Dove deep into programming fundamentals. Mastered core concepts and built first console applications,
-                discovering the power of code to create digital realities.</p>
-              <div class="timeline-tech">C++ • Java • Data Structures • Algorithms</div>
+              <p>Dove deep into programming fundamentals. Mastered core concepts and built first console applications.</p>
+              <div class="timeline-tech">JavaScript • Data Structures • Algorithms</div>
             </div>
           </div>
           <div class="timeline-item reveal" data-delay="300">
@@ -176,17 +192,17 @@
               <h3>2024 - AI & Innovation</h3>
               <p>Ventured into AI territories and game development. Built GENT, my breakthrough full-stack creation, and
                 explored Unity for immersive 3D experiences.</p>
-              <div class="timeline-tech">AI/ML • Unity • C# • Supabase • Advanced React</div>
+              <div class="timeline-tech">AI/ML • Unity • C# • Supabase • Advanced React • Linear Algebra • Calclus</div>
             </div>
           </div>
           <div class="timeline-item reveal" data-delay="700">
             <div class="timeline-marker active"></div>
             <div class="timeline-content">
               <h3>2025 - The Infinite Quest</h3>
-              <p>Currently pursuing advanced studies while architecting AI hardware solutions and multi-platform
+              <p>Currently pursuing advanced studies in Building Technology while architecting AI hardware solutions and multi-platform
                 experiences. Pushing boundaries in mobile development and hardware design. The journey to technological
                 mastery continues...</p>
-              <div class="timeline-tech">Kotlin • Dart • Flutter • Hardware Design • Advanced AI</div>
+              <div class="timeline-tech">Kotlin • Dart • Flutter • Hardware Design • Advanced AI • AutoCad • Revit • Blender</div>
             </div>
           </div>
         </div>
@@ -196,9 +212,8 @@
     <!-- ===== Projects Showcase ===== -->
     <section id="projects" class="container reveal-section">
       <div class="card reveal" data-delay="0">
-        <h2 class="gradient-text">Dimensional Creations</h2>
-        <p class="reveal" data-delay="100">Each project is a portal to a different digital dimension, crafted with
-          purpose and passion.</p>
+        <h2 class="gradient-text">Dimensional Creations</h2> 
+        <p class="reveal" data-delay="100">Each project is a solution to something either personal, not personal, boredom, competion or just pure practice. Build with purpose and passion.</p>
         <div class="projects-3d-carousel reveal" data-delay="150">
           <div class="carousel-controls">
             <button class="carousel-btn prev" aria-label="Previous project">←</button>
@@ -214,12 +229,11 @@
                 <div class="thumb-container">
                   <img src="assets/images/gent.png" alt="GENT Project" class="thumb" loading="lazy" decoding="async">
                   <div class="overlay gradient-overlay">
-                    <h3>GENT - Ethereal File Transfer</h3>
+                    <h3>GENT - Live File Transfer</h3>
                     <div class="project-story">
-                      <p><strong>The Challenge:</strong> Traditional file sharing lacks elegance and real-time magic.
+                      <p><strong>The Challenge:</strong> Traditional file sharing lacks elegance and real-time magic and its almost not instant for distant devices.
                       </p>
-                      <p><strong>The Solution:</strong> A cosmic file transfer system with live upload streaming and
-                        ethereal UI.</p>
+                      <p><strong>The Solution:</strong> A file transfer system with live upload streaming and mehhh UI.</p>
                       <p><strong>The Impact:</strong> Seamless file sharing experience with 99.9% uptime and real-time
                         progress.</p>
                     </div>
@@ -228,13 +242,15 @@
                       <span class="tech-pill">Supabase</span>
                       <span class="tech-pill">Real-time</span>
                       <span class="tech-pill">Responsive</span>
+                      <span class="tech-pill">HTML</span>
+                      <span class="tech-pill">CSS</span>
                     </div>
                   </div>
                 </div>
                 <div class="meta">
                   <div class="project-metrics">
                     <div class="metric">
-                      <span class="metric-value">500+</span>
+                      <span class="metric-value">20+</span>
                       <span class="metric-label">Files Transferred</span>
                     </div>
                     <div class="metric">
@@ -249,7 +265,7 @@
                     </a>
                     <a href="https://gent-2sp3.onrender.com/" class="link-pill primary" target="_blank"
                       rel="noopener noreferrer">
-                      <i class="fas fa-external-link-alt"></i> Live Demo
+                      <i class="fas fa-external-link-alt"></i> Live Site
                     </a>
                   </div>
                 </div>
@@ -259,44 +275,39 @@
             <article class="project reveal card-3d" data-delay="300">
               <div class="project-inner">
                 <div class="project-header">
-                  <span class="project-type">AI Hardware</span>
+                  <span class="project-type">Full-Stack Application</span>
                   <span class="project-status development">In Development</span>
                 </div>
                 <div class="thumb-container">
-                  <div class="project-preview ai-preview">
-                    <div class="neural-network">
-                      <div class="node"></div>
-                      <div class="node"></div>
-                      <div class="node"></div>
-                      <div class="connection"></div>
-                      <div class="connection"></div>
-                    </div>
+                  <img src="assets/images/TIC.png" alt="TIC project" class="thumb" loading="lazy" decoding="async">
+                  <div class="overlay gradient-overlay">
+                    <h3>GENT - Live File Transfer</h3>
                   </div>
                   <div class="overlay gradient-overlay">
-                    <h3>NeuroForge - AI Hardware Accelerator</h3>
+                    <h3>TIC- Things in Covenant</h3>
                     <div class="project-story">
-                      <p><strong>The Vision:</strong> Custom AI hardware that thinks at the speed of light.</p>
-                      <p><strong>The Innovation:</strong> Designing neural processing units optimized for real-time AI
-                        inference.</p>
-                      <p><strong>The Future:</strong> Democratizing AI hardware for edge computing applications.</p>
+                      <p><strong>The Vision:</strong> Anonymous website for a certain group of people</p>
+                      <p><strong>The Innovation:</strong> Nobody knows who's talking about anything, helping people who don't want people knowing who's saying what they are saying.</p>
+                      <p><strong>The Future:</strong> Free speech for all without critisism.</p>
                     </div>
                     <div class="tech-constellation">
-                      <span class="tech-pill">C++</span>
-                      <span class="tech-pill">FPGA</span>
-                      <span class="tech-pill">Neural Networks</span>
-                      <span class="tech-pill">Hardware Design</span>
+                      <span class="tech-pill">TypeScript</span>
+                      <span class="tech-pill">css</span>
+                      <span class="tech-pill">React</span>
+                      <span class="tech-pill">TypeScript JSX</span>
+                      <span class="tech-pill">Supabase</span>
                     </div>
                   </div>
                 </div>
                 <div class="meta">
                   <div class="project-metrics">
                     <div class="metric">
-                      <span class="metric-value">10x</span>
-                      <span class="metric-label">Faster Inference</span>
+                      <span class="metric-value">50+</span>
+                      <span class="metric-label">Users [increasing daily]</span>
                     </div>
                     <div class="metric">
-                      <span class="metric-value">50%</span>
-                      <span class="metric-label">Less Power</span>
+                      <span class="metric-value">100%</span>
+                      <span class="metric-label">Anonymity</span>
                     </div>
                   </div>
                   <div class="links">
@@ -314,10 +325,11 @@
             <article class="project reveal card-3d" data-delay="450">
               <div class="project-inner">
                 <div class="project-header">
-                  <span class="project-type">Game Development</span>
-                  <span class="project-status prototype">Prototype</span>
+                  <span class="project-type">Desktop Application</span>
+                  <span class="project-status prototype">In Development</span>
                 </div>
                 <div class="thumb-container">
+                    <img src="assets/images/genesis.png" alt="TIC project" class="thumb" loading="lazy" decoding="async">
                   <div class="project-preview game-preview">
                     <div class="game-elements">
                       <div class="cube rotating"></div>
@@ -325,40 +337,48 @@
                     </div>
                   </div>
                   <div class="overlay gradient-overlay">
-                    <h3>Cosmic Odyssey - 3D Space Adventure</h3>
+                    <h3>Genesis Project Hub</h3>
                     <div class="project-story">
-                      <p><strong>The Experience:</strong> An immersive 3D space exploration game with procedural worlds.
+                      <p><strong>The Experience:</strong> An immersive 3D environment for development, production, documentation, deployment, maintainability and scalability
                       </p>
-                      <p><strong>The Technology:</strong> Built with Unity, featuring advanced shader work and
-                        procedural generation.</p>
-                      <p><strong>The Journey:</strong> Currently developing advanced AI companions and multiplayer
-                        systems.</p>
+                      <p><strong>The Technology:</strong> 
+                        - Tauri + React + TypeScript: Desktop application framework,
+                        - Tailwind CSS v3: Styling with custom space theme,
+                        - SQLite + Prisma: Database with complete schema,
+                        - Framer Motion: Animations and transitions,
+                        - Lucide React: Icon library .</p>
+                      <p><strong>The Journey:</strong> Still in development. 60% overall completetion.</p>
                     </div>
                     <div class="tech-constellation">
-                      <span class="tech-pill">Unity</span>
-                      <span class="tech-pill">C#</span>
-                      <span class="tech-pill">Procedural Gen</span>
-                      <span class="tech-pill">3D Graphics</span>
+                      <span class="tech-pill">Typescript</span>
+                      <span class="tech-pill">SQLite</span>
+                      <span class="tech-pill">Lucid React</span>
+                      <span class="tech-pill">Rust</span>
+                      <span class="tech-pill">Tauri</span>
+                      <span class="tech-pill">Framer Motion</span>
+                      <span class="tech-pill">Tailwing CSS v3</span>
+                      <span class="tech-pill">Prisma</span>
+                      <span class="tech-pill">React</span>
                     </div>
                   </div>
                 </div>
                 <div class="meta">
                   <div class="project-metrics">
                     <div class="metric">
-                      <span class="metric-value">∞</span>
-                      <span class="metric-label">Procedural Worlds</span>
+                      <span class="metric-value">Single User-</span>
+                      <span class="metric-label">-Genesis Dev world</span>
                     </div>
                     <div class="metric">
-                      <span class="metric-value">60</span>
-                      <span class="metric-label">FPS Target</span>
+                      <span class="metric-value">Perfectly</span>
+                      <span class="metric-label">Optimized</span>
                     </div>
                   </div>
                   <div class="links">
                     <a href="#" class="link-pill disabled" aria-disabled="true">
-                      <span class="link-icon">🎮</span> Alpha Testing
+                      <span class="link-icon">🌚</span> Private Repo
                     </a>
                     <a href="#" class="link-pill disabled" aria-disabled="true">
-                      <span class="link-icon">🚀</span> Early 2025
+                      <span class="link-icon">😊</span> Genesis
                     </a>
                   </div>
                 </div>
@@ -464,4 +484,7 @@
   <script src="js/interactive-effects.js"></script>
   <script src="js/api-integration.js"></script>
 
+  <script defer src="js/nav.js"></script>
+
+  </body>
 </html>
