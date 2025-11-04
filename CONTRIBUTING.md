@@ -9,6 +9,7 @@ How to contribute:
 5. Push to your fork and open a pull request.
 
 Guidelines:
+
 - Follow existing code style and naming conventions.
 - Accessibility matters: include ARIA labels and keyboard controls for interactive elements.
 - Document any public API or JSON format changes in the README.

@@ -1,20 +1,27 @@
-// Small, accessible mobile nav toggle
+// Small, accessible mobile nav toggle — compatible with old and new markup
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('nav-toggle');
-  const menu = document.getElementById('primary-menu');
+  // support both old (#primary-menu) and new (.nav-list)
+  let menu = document.getElementById('primary-menu');
+  if (!menu) menu = document.querySelector('.nav-list');
 
   if (!toggle || !menu) return;
+
+  // ensure aria-expanded exists
+  if (!toggle.hasAttribute('aria-expanded')) toggle.setAttribute('aria-expanded', 'false');
+
+  const openClass = 'open';
 
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
+    menu.classList.toggle(openClass);
   });
 
-  // Close menu when a link is clicked (mobile)
+  // Close when a link inside the menu is clicked (mobile)
   menu.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
-      menu.classList.remove('open');
+      menu.classList.remove(openClass);
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
@@ -22,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Close on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      menu.classList.remove('open');
+      menu.classList.remove(openClass);
       toggle.setAttribute('aria-expanded', 'false');
     }
   });
