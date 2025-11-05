@@ -253,6 +253,31 @@ body.theme-night { --accent: #7c3aed; color: #e6eef8; background: linear-gradien
 
 .chip { background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:999px; font-weight:600; color:inherit; }
 
+/* 3D interactive chips */
+.chips { perspective: 900px; }
+.chip {
+  transform-style: preserve-3d;
+  transition: transform 420ms var(--easing-smooth), box-shadow 420ms ease, background 300ms ease;
+  will-change: transform;
+}
+.chip:hover, .chip:focus {
+  transform: rotateX(8deg) rotateY(6deg) translateY(-6px) translateZ(8px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+}
+
+/* subtle floating animation */
+@keyframes floaty {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0);} 
+}
+.chip[data-animate="true"] { animation: floaty 6s ease-in-out infinite; }
+
+/* profile photo styling */
+.photo-container { display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.profile-photo { width:120px; height:120px; object-fit:cover; border-radius:18px; border: 2px solid rgba(255,255,255,0.06); box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+
 .project-card, .skill-card, .stat, .timeline-item { transition: transform .5s var(--easing-smooth), box-shadow .4s ease, opacity .4s ease; }
 .project-card.reveal-on-scroll, .skill-card.reveal-on-scroll, .stat.reveal-on-scroll, .timeline-item.reveal-on-scroll { opacity:0; transform:translateY(10px); }
 .project-card.reveal-on-scroll.in-view, .skill-card.reveal-on-scroll.in-view, .stat.reveal-on-scroll.in-view, .timeline-item.reveal-on-scroll.in-view { opacity:1; transform:none; }
