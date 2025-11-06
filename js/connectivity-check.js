@@ -2,7 +2,9 @@
 class ConnectivityChecker {
   constructor() {
     this.apiURL = 
-      (window.location.hostname.includes("vercel.app") || window.location.hostname.includes("portfolio"))
+      (window.location.hostname.includes("vercel.app") || 
+       window.location.hostname.includes("netlify.app") ||
+       window.location.hostname.includes("portfolio"))
       ? "https://portfolio-xj76.onrender.com/api"
       : "http://localhost:3000/api";
     
@@ -35,7 +37,7 @@ class ConnectivityChecker {
         position: fixed;
         top: 20px;
         right: 20px;
-        z-index: 1000;
+        z-index: 999;
         background: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 10px 15px;
@@ -44,6 +46,7 @@ class ConnectivityChecker {
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
+        pointer-events: auto;
       }
       
       .status-indicator {
@@ -423,3 +426,39 @@ window.checkConnectivity = () => {
     window.connectivityChecker.checkConnectivity();
   }
 };
+
+// Additional CSS to fix button interactions
+const buttonFixStyle = document.createElement('style');
+buttonFixStyle.textContent = `
+  /* Ensure buttons and interactive elements are clickable */
+  .btn, .link-pill, .social-link, button, input, textarea, select {
+    position: relative;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Fix form styling */
+  #contact-form {
+    position: relative;
+    z-index: 1001 !important;
+  }
+
+  #contact-form input, #contact-form textarea, #contact-form button {
+    position: relative;
+    z-index: 1002 !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Disable problematic animations */
+  .btn:hover, button:hover {
+    transform: none !important;
+  }
+  
+  /* Ensure contact form button works */
+  .contact-form button {
+    z-index: 1003 !important;
+    pointer-events: auto !important;
+  }
+`;
+
+document.head.appendChild(buttonFixStyle);

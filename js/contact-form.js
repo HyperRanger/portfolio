@@ -2,7 +2,9 @@
 class ContactFormHandler {
   constructor() {
     this.apiURL = 
-      (window.location.hostname.includes("vercel.app") || window.location.hostname.includes("portfolio"))
+      (window.location.hostname.includes("vercel.app") || 
+       window.location.hostname.includes("netlify.app") ||
+       window.location.hostname.includes("portfolio"))
       ? "https://portfolio-xj76.onrender.com/api"
       : "http://localhost:3000/api";
     
