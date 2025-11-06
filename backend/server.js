@@ -78,24 +78,50 @@ app.use(limiter);
 
 // CORS configuration for frontend access
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://koji-portfolio-frontend.vercel.app',
-        'https://portfolio-frontend.vercel.app',
-        'https://owolabi-portfolio.vercel.app',
-        'https://portfolio-6gxedqthi-olamlekans-projects.vercel.app',
-        'https://portfolio-ayjv42x4i-olamlekans-projects.vercel.app',
-        /^https:\/\/portfolio-.*\.vercel\.app$/,
-        /^https:\/\/.*-olamlekans-projects\.vercel\.app$/,
-        process.env.FRONTEND_URL
-      ].filter(Boolean)
-    : [
-        'http://localhost:3001',
-        'http://127.0.0.1:3001',
-        'http://localhost:5500',
-        'http://127.0.0.1:5500'
-      ],
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = process.env.NODE_ENV === 'production' 
+      ? [
+          'https://koji-portfolio-frontend.vercel.app',
+          'https://portfolio-frontend.vercel.app',
+          'https://owolabi-portfolio.vercel.app',
+          process.env.FRONTEND_URL
+        ].filter(Boolean)
+      : [
+          'http://localhost:3001',
+          'http://127.0.0.1:3001',
+          'http://localhost:5500',
+          'http://127.0.0.1:5500'
+        ];
+    
+    // Allow any Vercel app domain for this user
+    const vercelPatterns = [
+      /^https:\/\/portfolio-.*\.vercel\.app$/,
+      /^https:\/\/.*-olamlekans-projects\.vercel\.app$/,
+      /^https:\/\/.*\.vercel\.app$/
+    ];
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // Check if origin matches Vercel patterns
+    for (const pattern of vercelPatterns) {
+      if (pattern.test(origin)) {
+        return callback(null, true);
+      }
+    }
+    
+    // Log rejected origins for debugging
+    console.log(`🚫 CORS rejected origin: ${origin}`);
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Body parsing middleware
@@ -347,6 +373,11 @@ app.get('/api/health', (req, res) => {
     message: 'Server is running',
     timestamp: new Date().toISOString()
   });
+});
+
+// Favicon route to prevent 404 errors
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
 });
 
 // Endpoint to get admin status and temp password if available
