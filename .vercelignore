@@ -1,0 +1,14 @@
+backend/
+node_modules/
+*.log
+.env
+.env.local
+.env.production
+.env.development
+README.md
+CONTRIBUTING.md
+k8s/
+scripts/
+render.yaml
+start.bat
+serve.js
