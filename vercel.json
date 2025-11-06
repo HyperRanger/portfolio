@@ -1,26 +1,3 @@
 {
-  "version": 2,
-  "public": true,
-  "trailingSlash": false,
-  "cleanUrls": true,
-  "headers": [
-    {
-      "source": "/css/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/css"
-        }
-      ]
-    },
-    {
-      "source": "/js/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript"
-        }
-      ]
-    }
-  ]
+  "version": 2
 }

@@ -4,9 +4,6 @@
   "description": "Professional portfolio with 3D effects and physics-based skills constellation",
   "main": "index.html",
   "scripts": {
-    "frontend": "set PORT=3001 && node serve.js",
-    "backend": "set PORT=3000 && cd backend && npm start",
-    "dev": "start npm run backend && timeout /t 2 && start npm run frontend",
     "build": "echo 'Static site - no build needed'"
   },
   "keywords": [
@@ -17,8 +14,5 @@
     "interactive"
   ],
   "author": "Owolabi Olamilekan",
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  "license": "MIT"
 }
