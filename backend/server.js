@@ -84,7 +84,9 @@ app.use(cors({
         'https://portfolio-frontend.vercel.app',
         'https://owolabi-portfolio.vercel.app',
         'https://portfolio-6gxedqthi-olamlekans-projects.vercel.app',
-        /^https:\/\/.*\.vercel\.app$/,
+        'https://portfolio-ayjv42x4i-olamlekans-projects.vercel.app',
+        /^https:\/\/portfolio-.*\.vercel\.app$/,
+        /^https:\/\/.*-olamlekans-projects\.vercel\.app$/,
         process.env.FRONTEND_URL
       ].filter(Boolean)
     : [
