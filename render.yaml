@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./backend
+    region: ohio # or choose your preferred region
+    plan: free # or specify your plan type
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true
