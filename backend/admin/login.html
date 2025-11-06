@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --surface: #1e293b;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+        }
+        .glass-morphism {
+            background: rgba(30, 41, 59, 0.7);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-blue-900">
+    <div id="loginForm" class="min-h-screen flex items-center justify-center px-4">
+        <div class="glass-morphism p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-[1.02]">
+            <div class="mb-8 text-center">
+                <i class="fas fa-user-shield text-4xl text-blue-400 mb-4"></i>
+                <h2 class="text-3xl font-bold text-white">Admin Login</h2>
+                <p class="text-blue-300 mt-2">Manage your portfolio content</p>
+            </div>
+            <div id="initStatus" class="mb-6 p-4 glass-morphism rounded-lg border border-blue-500 hidden">
+                <div class="flex items-center mb-3">
+                    <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+                    <p class="font-bold text-blue-300">Admin Account Setup</p>
+                </div>
+                <p class="text-sm mt-2 text-blue-200">Username: <span id="setupUsername" class="font-mono bg-blue-900 px-2 py-1 rounded"></span></p>
+                <p class="text-sm mt-2 text-blue-200">Password: <span id="setupPassword" class="font-mono bg-blue-900 px-2 py-1 rounded"></span></p>
+                <p class="text-xs mt-3 text-blue-400"><i class="fas fa-exclamation-circle mr-1"></i> Please change your password after logging in.</p>
+            </div>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-gray-300 text-sm font-bold mb-2" for="username">
+                        Username
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-800 text-white leading-tight focus:outline-none focus:shadow-outline"
+                           id="username" type="text" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 text-sm font-bold mb-2" for="password">
+                        Password
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-800 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                           id="password" type="password" required>
+                </div>
+                <div class="flex items-center justify-center">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let supabaseClient = null;
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch('/api/admin/status');
+                const data = await response.json();
+                if (data.success && data.supabase) {
+                    try {
+                        supabaseClient = supabase.createClient(data.supabase.url, data.supabase.anonKey);
+                        console.log('Supabase client initialized');
+                    } catch (err) {
+                        console.warn('Failed to initialize Supabase client', err);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                let token = null;
+                if (supabaseClient) {
+                    const { data: authData, error: authError } = await supabaseClient.auth.signInWithPassword({
+                        email: username,
+                        password
+                    });
+                    if (authError || !authData?.session) {
+                        console.error('Sign in error', authError);
+                        return alert(authError?.message || 'Invalid credentials');
+                    }
+                    const session = authData.session;
+                    token = session.access_token;
+                    localStorage.setItem('adminSession', JSON.stringify({
+                        accessToken: token,
+                        refreshToken: session.refresh_token || null,
+                        expiresAt: session.expires_at ? session.expires_at * 1000 : null
+                    }));
+                } else {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await response.json();
+                    if (!data.success) return alert(data.message || 'Invalid credentials');
+                    token = data.token;
+                }
+
+                if (token) {
+                    localStorage.setItem('adminToken', token);
+                    window.location.href = '/admin/dashboard.html';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed');
+            }
+        });
+    </script>
+</body>
+</html>

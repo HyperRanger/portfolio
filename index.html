@@ -6,6 +6,7 @@
     <title>Owolabi Olamilekan — Portfolio</title>
     <meta name="description" content="Sleek portfolio — software, AI hardware and creative systems." />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </head>
 
   <body>
@@ -30,28 +31,27 @@
 
     <main id="content">
       <section class="hero container">
-        <div class="hero-inner">
-          <div class="hero-left">
-            <h1 class="title">Owolabi Olamilekan</h1>
-            <p class="subtitle">Software Engineer • AI Hardware • Product Builder</p>
-            <div class="actions">
-              <a class="btn primary" href="#projects">View Projects</a>
-              <a class="btn ghost" href="#contact">Get in Touch</a>
-            </div>
+        <div class="hero-inner hero-centered">
+          <div class="photo-container">
+            <img src="assets/images/profile.jpg" alt="Owolabi Olamilekan" class="profile-photo">
           </div>
-          <div class="hero-right">
-            <div class="photo-container">
-              <img src="assets/images/profile.jpg" alt="Owolabi Olamilekan" class="profile-photo">
-            </div>
-            <div class="hero-card">
-              <h3 class="card-title">Current Focus</h3>
-              <p>Designing robust AI hardware stacks and beautiful, usable developer tools.</p>
-              <ul class="card-list">
-                <li>AI Systems • Edge Hardware</li>
-                <li>Full-stack Product Engineering</li>
-                <li>3D & Real-time Interfaces</li>
-              </ul>
-            </div>
+
+          <h1 class="title centered-name">Owolabi Olamilekan</h1>
+          <p class="subtitle centered-subtitle">Software Engineer • AI Hardware • Product Builder</p>
+
+          <div class="actions">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn ghost" href="#contact">Get in Touch</a>
+          </div>
+
+          <div class="hero-card">
+            <h3 class="card-title">Current Focus</h3>
+            <p>Designing robust AI hardware stacks and beautiful, usable developer tools.</p>
+            <ul class="card-list">
+              <li>AI Systems • Edge Hardware</li>
+              <li>Full-stack Product Engineering</li>
+              <li>3D & Real-time Interfaces</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -220,11 +220,15 @@
       <section id="contact" class="section container">
         <h2 class="section-title">Contact</h2>
         <p class="section-lead">Interested in working together? Send a quick note.</p>
-        <form id="contact-form" class="contact-form" novalidate>
+        <form id="contact-form" class="contact-form" novalidate onsubmit="return false;">
           <input name="name" placeholder="Your name" required>
           <input name="email" placeholder="Email" required type="email">
+          <input name="subject" placeholder="Subject" required>
           <textarea name="message" rows="4" placeholder="Message" required></textarea>
-          <div class="form-actions"><button class="btn primary" type="submit">Send</button></div>
+          <div id="form-status" class="muted"></div>
+          <div class="form-actions">
+            <button class="btn primary" type="submit">Send Message</button>
+          </div>
         </form>
       </section>
     </main>
@@ -233,12 +237,17 @@
       <div class="container footer-inner">
         <div class="branding">© 2025 Owolabi Olamilekan</div>
         <div class="socials">
-          <a href="https://github.com/HyperRanger" aria-label="GitHub">GitHub</a>
-          <a href="https://www.linkedin.com/in/olamilekan-owolabi-535bab36b/" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://github.com/HyperRanger" target="_blank" aria-label="GitHub" class="social-link">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/olamilekan-owolabi-535bab36b/" target="_blank" aria-label="LinkedIn" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
         </div>
       </div>
     </footer>
 
+    <script src="js/projects.js" defer></script>
     <script src="js/theme.js" defer></script>
     <script src="js/skills.js" defer></script>
     <script src="js/nav.js" defer></script>

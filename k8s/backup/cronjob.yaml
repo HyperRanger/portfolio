@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: portfolio-backup
+spec:
+  schedule: "0 */6 * * *" # Every 6 hours
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup
+              image: bitnami/kubectl
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  # Create backup timestamp
+                  TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+
+                  # Get projects data from persistent volume
+                  kubectl exec -n portfolio $(kubectl get pod -n portfolio -l app=portfolio-backend -o jsonpath='{.items[0].metadata.name}') \
+                    -- cat /usr/src/app/backend/data/projects.json > /backup/projects_$TIMESTAMP.json
+
+                  # Compress backup
+                  gzip /backup/projects_$TIMESTAMP.json
+
+                  # Upload to cloud storage (example using AWS S3)
+                  aws s3 cp /backup/projects_$TIMESTAMP.json.gz s3://your-bucket/backups/
+
+                  # Cleanup old backups (keep last 30 days)
+                  find /backup -type f -mtime +30 -delete
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+          volumes:
+            - name: backup-volume
+              persistentVolumeClaim:
+                claimName: backup-pvc
+          restartPolicy: OnFailure

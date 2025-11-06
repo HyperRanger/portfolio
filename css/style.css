@@ -147,7 +147,7 @@ body {
 .skip-link { position:absolute; left:-9999px; }
 
 /* Topbar */
-.topbar { position:fixed; left:0; right:0; top:0; z-index:40; backdrop-filter:blur(6px);
+.topbar { position:fixed; left:0; right:0; top:0; z-index:40; -webkit-backdrop-filter: blur(6px); backdrop-filter:blur(6px);
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
 .topbar-inner { display:flex; align-items:center; justify-content:space-between; padding:12px 28px; }
@@ -191,11 +191,35 @@ main { padding-top:78px; }
 .skill-info-panel { position:absolute; right:18px; top:18px; width:260px; background:var(--glass); padding:12px; border-radius:10px; color:var(--muted); }
 
 .contact-form { display:grid; gap:8px; max-width:600px; }
-.contact-form input, .contact-form textarea { padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:inherit; }
+.contact-form input, .contact-form textarea { 
+    padding:10px; 
+    border-radius:8px; 
+    border:1px solid rgba(255,255,255,0.03); 
+    background:transparent; 
+    color:inherit; 
+}
+.muted { 
+    color: var(--muted);
+    font-size: 0.9em;
+    margin: 8px 0;
+}
+.muted.error { color: #ff6b6b; }
+.muted.success { color: #51cf66; }
+.muted.loading { color: #339af0; }
 
 .site-footer { padding:18px 0; border-top:1px solid rgba(255,255,255,0.02); }
 .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.socials a { color:var(--muted); text-decoration:none; margin-left:12px; }
+.socials { display: flex; gap: 20px; }
+.social-link { 
+    color: var(--muted); 
+    text-decoration: none; 
+    font-size: 24px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.social-link:hover { 
+    color: var(--accent);
+    transform: translateY(-2px);
+}
 
 @media (max-width:900px) {
   .hero-inner { flex-direction:column; }
@@ -275,8 +299,19 @@ body.theme-night { --accent: #7c3aed; color: #e6eef8; background: linear-gradien
 .chip[data-animate="true"] { animation: floaty 6s ease-in-out infinite; }
 
 /* profile photo styling */
-.photo-container { display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
-.profile-photo { width:120px; height:120px; object-fit:cover; border-radius:18px; border: 2px solid rgba(255,255,255,0.06); box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+/* Hero-centered layout: profile and name centered and professional */
+.hero-centered { display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px; }
+.photo-container { display:flex; align-items:center; justify-content:center; margin-bottom:4px; position:relative; }
+
+/* Remove decorative rotating ring and related animations for a cleaner, professional look */
+.photo-container::before { display: none !important; }
+@keyframes rotate-slow { from { transform: none; } to { transform: none; } }
+
+.profile-photo { width:160px; height:160px; object-fit:cover; border-radius:50%; border: 3px solid rgba(255,255,255,0.06); box-shadow: 0 12px 30px rgba(2,6,23,0.6); display:block; }
+
+/* Remove flip/3d hover effects used previously; keep subtle hover lift only */
+#about img.flip-3d, .profile-photo.flip-3d { transform: none; transition: box-shadow 220ms ease, transform 220ms ease; }
+.profile-photo:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(2,6,23,0.6); }
 
 .project-card, .skill-card, .stat, .timeline-item { transition: transform .5s var(--easing-smooth), box-shadow .4s ease, opacity .4s ease; }
 .project-card.reveal-on-scroll, .skill-card.reveal-on-scroll, .stat.reveal-on-scroll, .timeline-item.reveal-on-scroll { opacity:0; transform:translateY(10px); }
@@ -765,14 +800,7 @@ h2 {
   z-index: 1;
 }
 
-#about img.flip-3d:hover {
-  transform: rotateY(360deg) translateZ(50px) scale(1.1);
-  box-shadow:
-    0 40px 120px rgba(0, 0, 0, 0.7),
-    0 0 100px rgba(138, 43, 226, 0.6),
-    inset 0 0 0 6px rgba(255, 255, 255, 0.2);
-  filter: saturate(1.2) brightness(1.1);
-}
+/* removed heavy flip animation to keep professional presence */
 
 /* Skills Grid: A cosmic container for bouncing skill orbs */
 .skills-grid {
