@@ -3,18 +3,16 @@ FROM node:20-alpine
 # Install build tools (kept minimal)
 RUN apk add --no-cache python3 make g++ git
 
-# Set working directory to backend (our Node app lives in backend/)
-WORKDIR /usr/src/app/backend
+# Set working directory
+WORKDIR /usr/src/app
 
-# Copy backend package files first for better layer caching
-COPY backend/package*.json ./
+# Copy package files first for better layer caching
+COPY package*.json ./
 
-# Install production dependencies. Use npm install --omit=dev so the build
-# doesn't fail when a package-lock.json is not present (npm ci requires a lockfile).
+# Install production dependencies
 RUN npm install --omit=dev --no-audit --no-fund
 
-# Copy the rest of the project into the container
-WORKDIR /usr/src/app
+# Copy the rest of the backend
 COPY . .
 
 # Expose the backend port
@@ -24,4 +22,4 @@ EXPOSE 3001
 ENV NODE_ENV=production
 
 # Start the server
-CMD ["node", "backend/server.js"]
+CMD ["node", "server.js"]

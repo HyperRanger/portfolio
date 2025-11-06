@@ -2,8 +2,9 @@ services:
   - type: web
     name: portfolio-backend
     env: docker
+    rootDir: backend
     dockerfilePath: ./Dockerfile
-    dockerContext: ./backend
+    dockerContext: .
     region: ohio # or choose your preferred region
     plan: free # or specify your plan type
     healthCheckPath: /api/health
