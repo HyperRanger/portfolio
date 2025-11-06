@@ -9,3 +9,4 @@ scripts/
 render.yaml
 start.bat
 serve.js
+test-connectivity.html
