@@ -15,7 +15,6 @@ class PortfolioAPI {
 
   init() {
     this.loadProjects();
-    this.setupContactForm();
   }
 
   // Load projects dynamically from the API
@@ -158,121 +157,7 @@ class PortfolioAPI {
     return date.getFullYear();
   }
 
-  // Setup contact form
-  setupContactForm() {
-    const form = document.getElementById('contact-form');
-    const statusElement = document.getElementById('form-status');
 
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await this.handleContactSubmission(form, statusElement);
-    });
-  }
-
-  // Handle contact form submission
-  async handleContactSubmission(form, statusElement) {
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
-
-    try {
-      // Update UI to show loading state
-      submitButton.textContent = 'Sending...';
-      submitButton.disabled = true;
-      submitButton.style.opacity = '0.7';
-      statusElement.textContent = 'Sending your message...';
-      statusElement.className = 'muted loading';
-
-      // Get form data
-      const formData = new FormData(form);
-      const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject') || 'Portfolio Contact',
-        message: formData.get('message')
-      };
-
-      // Validate required fields
-      if (!data.name || !data.email || !data.subject || !data.message) {
-        throw new Error('Please fill in all required fields.');
-      }
-
-      console.log('📧 Sending contact form to backend...');
-
-      // Send to API
-      const response = await fetch(`${this.apiURL}/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-      console.log('📬 Backend response:', result);
-
-      if (result.success) {
-        // Success
-        statusElement.textContent = '✅ ' + result.message;
-        statusElement.className = 'muted success';
-        form.reset();
-        
-        // Show success animation
-        this.showSuccessAnimation(form);
-        
-        // Auto-hide success message after 5 seconds
-        setTimeout(() => {
-          statusElement.textContent = '';
-          statusElement.className = 'muted';
-        }, 5000);
-      } else {
-        // Error from server
-        let errorMsg = result.message || 'Failed to send message. Please try again.';
-        
-        if (result.errors && result.errors.length > 0) {
-          const errorMessages = result.errors.map(err => err.msg).join(', ');
-          errorMsg = `Validation Error: ${errorMessages}`;
-        }
-        
-        statusElement.textContent = '❌ ' + errorMsg;
-        statusElement.className = 'muted error';
-        
-        // Show detailed error in development
-        if (result.error) {
-          console.error('Backend error details:', result.error);
-        }
-      }
-    } catch (error) {
-      console.error('❌ Contact form error:', error);
-      
-      let errorMessage = 'Network error. Please check your connection and try again.';
-      
-      if (error.message.includes('fill in all')) {
-        errorMessage = error.message;
-      } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        errorMessage = 'Cannot connect to server. Make sure the backend is running.';
-      }
-      
-      statusElement.textContent = '❌ ' + errorMessage;
-      statusElement.className = 'muted error';
-    } finally {
-      // Reset button
-      submitButton.textContent = originalButtonText;
-      submitButton.disabled = false;
-      submitButton.style.opacity = '1';
-    }
-  }
-
-  // Show success animation
-  showSuccessAnimation(form) {
-    form.style.transform = 'scale(1.02)';
-    form.style.transition = 'transform 0.3s ease';
-    
-    setTimeout(() => {
-      form.style.transform = 'scale(1)';
-    }, 300);
-  }
 
   // Show error message for projects loading
   showProjectsError() {
