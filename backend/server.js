@@ -52,14 +52,7 @@ const PORT = process.env.PORT || 3000;
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://your-portfolio-url.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-  optionsSuccessStatus: 204
-};
-app.use(cors(corsOptions));
+
 
 // Rate limiting
 const limiter = rateLimit({
@@ -83,13 +76,20 @@ const loginLimiter = rateLimit({
 
 app.use(limiter);
 
-// CORS configuration
+// CORS configuration for frontend access
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://portfolio-backend-0mls.onrender.com']  
+    ? [
+        'https://koji-portfolio-frontend.vercel.app',
+        'https://portfolio-frontend.vercel.app',
+        'https://owolabi-portfolio.vercel.app',
+        process.env.FRONTEND_URL
+      ].filter(Boolean)
     : [
         'http://localhost:3001',
-        'http://127.0.0.1:3001'
+        'http://127.0.0.1:3001',
+        'http://localhost:5500',
+        'http://127.0.0.1:5500'
       ],
   credentials: true
 }));
