@@ -86,7 +86,7 @@ app.use(limiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://68d72c797128a27090fad2dd--extraordinary-tiramisu-b50b44.netlify.app/']  
+    ? ['https://portfolio-backend-0mls.onrender.com']  
     : [
         'http://localhost:3001',
         'http://127.0.0.1:3001'
