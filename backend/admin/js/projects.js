@@ -89,3 +89,4 @@ function renderProjects(projects) {
             </div>
         </div>
     `).join('');
+}
